@@ -45,10 +45,12 @@
  lda	#\3		; number of bytes to be sent from the controller.
  sta	$4305
 
- sep	#$20		; set the accumulator (A) register into 8 bit mode
+ ;sep	#$20		; set the accumulator (A) register into 8 bit mode
 
- lda.w	#\1		; from where the data is supposed to be loaded from		
+ lda	#\1		; from where the data is supposed to be loaded from		
  sta	$4302
+
+ sep #$20
  
  ldy	#:\1		; from which bank the data is supposed to be loaded from
  sty	$4304
@@ -61,6 +63,7 @@
  
  ldy	#$01		; turn on bit 1 (channel 0) of DMA - that is, start rollin'
  sty	$420b
+
   
  plp			; Restore the state of all registers before leaving the function.
  ply

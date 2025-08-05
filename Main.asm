@@ -20,7 +20,7 @@ Start:
     ; --- Load our data into SNES memory ---
     LoadPalette Palette $00 PaletteEnd-Palette
     LoadVRAM MyTile, $0000, TileEnd-MyTile
-    LoadVRAM MyMap, $1000, MapEnd-MyMap
+    LoadVRAM MyMap, $4000, MapEnd-MyMap
 
     ; --- Configure PPU for BG1 Display ---
     sep #$20        ; Set A register to 8-bit.
@@ -30,7 +30,7 @@ Start:
     sta $212C
     ; Set VRAM location for the BG1 Tilemap.
     ; Destination is $1000. Address is in 2KB blocks ($1000 / $800 = 2).
-    lda #$02
+    lda #$40
     sta $2107       ; BG1SC: BG1 Screen Base & Size.
     ; Set VRAM location for BG Tile Data.
     ; We put our tiles at $0000. Address is in 8KB blocks.
@@ -57,6 +57,9 @@ Palette:
 ;Palette:
     ; SNES colors are 15-bit: 0BBBBBGGGGGRRRRR
     .DB %00000000, %00000000,%00011111,%00000000,%11100000,%00000011,%00000000,%01111100
+    .DB %00000000, %00000000,%00011111,%00000000,%11100000,%00000011,%00000000,%01111100
+    .DB %00000000, %00000000,%00011111,%00000000,%11100000,%00000011,%00000000,%01111100
+    .DB %00000000, %00000000,%00011111,%00000000,%11100000,%00000011,%00000000,%01111100
     ;.word $0000  ; Color 0: Transparent Black
     ;.word $001F  ; Color 1: Red   (%0000000000011111)
     ;.word $7C00  ; Color 2: Blue  (%0111110000000000)
@@ -75,6 +78,8 @@ MyTile:
     .byte $00,$00,$00,$00,$00,$00,$00,$00
     ; Plane 3 (bit 3 of color index)
     .byte $00,$00,$00,$00,$00,$00,$00,$00
+    .byte $00 $FF $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $00 $FF
+    .byte $00 $FF $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $00 $FF
 TileEnd:
 
 MyMap:
@@ -82,8 +87,11 @@ MyMap:
     ; Format: VHOo PPPP TTTT TTTT
     ; V=VFlip, H=HFlip, O=Priority, P=Palette, T=Tile Index
     ; We fill the screen with Tile #1, using Palette 0.
-    .rept 32*32
-    .word $0000  ; Use Tile #1, Palette 0, Prio 0, No flip
+    .rept 32*16
+    .word $0000 ; Use Tile #1, Palette 0, Prio 0, No flip
+    .endr
+    .rept 32*16
+    .word $0001 ; Use Tile #1, Palette 0, Prio 0, No flip
     .endr
 MapEnd:
 
