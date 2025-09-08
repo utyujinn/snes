@@ -1,3 +1,6 @@
+ ;macro for loading palette data into the CGRAM
+ ;only use if SIZE is less than 256 bytes
+ ;syntax SetPalette LABEL CGRAM_ADDRESS SIZE
  .macro LoadPalette
  pha
  php
@@ -24,7 +27,8 @@
  plp
  pla
  .endm
-;macro for loading graphics data into the VRAM
+
+ ;macro for loading graphics data into the VRAM
  ;only use if SIZE is less than 256 bytes
  ;syntax LoadVRAM LABEL  VRAM_ADDRESS  SIZE
  .macro LoadVRAM
@@ -44,8 +48,6 @@
 
  lda	#\3		; number of bytes to be sent from the controller.
  sta	$4305
-
- ;sep	#$20		; set the accumulator (A) register into 8 bit mode
 
  lda	#\1		; from where the data is supposed to be loaded from		
  sta	$4302

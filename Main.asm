@@ -1,7 +1,7 @@
 ; SNES Initialization Tutorial code(https://en.wikibooks.org/wiki/Super_NES_Programming/Initialization_Tutorial)
-.include "Header.inc"
-.include "Snes_Init.asm"
-.include "DMA.asm"
+.include "modules/Header.inc"
+.include "modules/Snes_Init.asm"
+.include "modules/DMA.asm"
 
 ; Needed to satisfy interrupt definition in "Header.inc".
 VBlank:
@@ -62,7 +62,7 @@ Palette:
     ;.DB %00000000, %00000000,%00011111,%00000000,%11100000,%00000011,%00000000,%01111100
     ;.DB %00000000, %00000000,%00011111,%00000000,%11100000,%00000011,%00000000,%01111100
 
-    .incbin "hotaru.pal"
+    .incbin "graphic/hotaru.pal"
 
     ;.word $0000  ; Color 0: Transparent Black
     ;.word $001F  ; Color 1: Red   (%0000000000011111)
@@ -80,7 +80,7 @@ MyTile:
     ;.byte $00,$00,$00,$00,$00,$00,$00,$00
     ;.byte $00 $FF $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $00 $FF
     ;.byte $00 $FF $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $7E $81 $00 $FF
-    .incbin "hotaru.bin"
+    .incbin "graphic/hotaru.bin"
 TileEnd:
 
 MyMap:
